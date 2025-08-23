@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.NewTrainingFragment">
+
+    <LinearLayout
+        android:id="@+id/llHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="@dimen/md_16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/lg_36p"
+            android:layout_height="@dimen/lg_36p"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_dumbell"
+            app:tint="@color/brand_complement"/>
+
+        <TextView
+            style="@style/Heading"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="@dimen/sm_8dp"
+            android:layout_weight="1"
+            android:text="@string/app_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <ImageButton
+            android:id="@+id/btnSave"
+            android:layout_width="@dimen/xl_48dp"
+            android:layout_height="@dimen/xl_48dp"
+            android:background="@drawable/bg_outlined_white_border"
+            android:contentDescription="@string/save_training_label"
+            android:src="@drawable/ic_save"
+            app:tint="@color/brand_complement" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/llHeader"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="@dimen/xmd_24dp"
+        android:orientation="vertical"
+        android:background="@drawable/bg_top_rounded_white">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:endIconMode="clear_text"
+            android:hint="@string/training_name_hint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tietTrainingName"
+                style="@style/App.TextInputEditText.Base"
+                android:drawableStart="@drawable/ic_dumbell"
+                android:imeOptions="actionDone"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sm_8dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:hint="@string/training_category_hint">
+
+            <AutoCompleteTextView
+                android:id="@+id/actTrainingType"
+                style="@style/App.TextInputEditText.Base"
+                android:inputType="none"
+                android:focusable="false"
+                android:drawableStart="@drawable/ic_category"
+                android:popupBackground="@color/white"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
