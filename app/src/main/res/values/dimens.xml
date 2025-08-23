@@ -2,8 +2,9 @@
 <resources>
     <dimen name="sm_8dp">8dp</dimen>
     <dimen name="md_16dp">16dp</dimen>
-    <dimen name="lg_24dp">24dp</dimen>
-    <dimen name="xl_36p">36dp</dimen>
+    <dimen name="xmd_24dp">24dp</dimen>
+    <dimen name="lg_36p">36dp</dimen>
+    <dimen name="xl_48dp">48dp</dimen>
     <dimen name="xxl_54dp">54dp</dimen>
     <dimen name="huge_256dp">256dp</dimen>
 </resources>

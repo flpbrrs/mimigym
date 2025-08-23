@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MimiGym</string>
+    <string name="mimigym_app_logo_description">MimiGym App logo - A white dumbell</string>
+    <string name="save_training_label">Save Training</string>
+    <string name="training_name_hint">Qual o nome do treino?</string>
+    <string name="training_category_hint">Qual a categoria do seu treino?</string>
 </resources>

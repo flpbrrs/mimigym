@@ -27,9 +27,19 @@
     </style>
 
     <!-- Components -->
-    <style name="PrimaryButtom" parent="Widget.MaterialComponents.Button">
+    <style name="App.PrimaryButton.Base" parent="Widget.MaterialComponents.Button">
         <item name="android:textAppearance">@style/Label</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="App.TextInputEditText.Base" parent="Widget.Material3.TextInputEditText.OutlinedBox">
+        <item name="android:textColor">@color/slc_input_active_mode_tint</item>
+        <item name="android:drawableTint">@color/slc_input_active_mode_tint</item>
+        <item name="android:drawablePadding">@dimen/sm_8dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:inputType">text</item>
     </style>
 
 </resources>
