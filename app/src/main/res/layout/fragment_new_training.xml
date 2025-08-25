@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.NewTrainingFragment">
+
+    <LinearLayout
+        android:id="@+id/llHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingVertical="@dimen/md_16dp"
+        android:paddingHorizontal="@dimen/xmd_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/llBody">
+
+        <ImageView
+            android:layout_width="@dimen/lg_36p"
+            android:layout_height="@dimen/lg_36p"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_dumbell"
+            app:tint="@color/brand_complement"/>
+
+        <TextView
+            style="@style/Heading"
+            android:text="@string/app_name"
+            android:layout_marginHorizontal="@dimen/sm_8dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <ImageButton
+            android:id="@+id/btnSave"
+            style="@style/Mimi.ImageButton.Outlined"
+            android:contentDescription="@string/save_training_label"
+            android:src="@drawable/ic_save" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llBody"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="@dimen/xmd_24dp"
+        android:orientation="vertical"
+        android:background="@drawable/bg_top_rounded_white"
+        app:layout_constraintTop_toBottomOf="@+id/llHeader"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:endIconMode="clear_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tietTrainingName"
+                style="@style/Mimi.TextInputEditText.Base"
+                android:hint="@string/training_name_hint"
+                android:drawableStart="@drawable/ic_dumbell"
+                android:imeOptions="actionDone"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Space android:layout_width="match_parent" android:layout_height="@dimen/sm_8dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+            <AutoCompleteTextView
+                android:id="@+id/actTrainingType"
+                style="@style/Mimi.AutoCompleteView.Base"
+                android:hint="@string/training_category_hint"
+                android:drawableStart="@drawable/ic_category"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Space android:layout_width="match_parent" android:layout_height="@dimen/md_16dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="bottom">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/Heading"
+                android:text="@string/exercises"
+                android:layout_weight="1"
+                android:paddingBottom="4dp"
+                android:textColor="@color/black"
+                android:background="@drawable/bg_border_bottom"/>
+
+            <ImageButton
+                android:id="@+id/btnAdd"
+                style="@style/Mimi.ImageButton.Filled"
+                android:contentDescription="@string/add_exercise_label"
+                android:src="@drawable/ic_add"/>
+
+        </LinearLayout>
+
+        <Space android:layout_width="match_parent" android:layout_height="@dimen/sm_8dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvExercises"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_marginTop="16dp"
+            tools:listitem="@layout/item_exercise_list"
+            tools:itemCount="4"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

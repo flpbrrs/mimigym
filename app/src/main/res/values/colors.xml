@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Brand Colors -->
+    <color name="brand">#1D503A</color>
+    <color name="brand_complement">#FAF5EE</color>
+
+    <!-- App Colors -->
+    <color name="gray_800">#333333</color>
+    <color name="gray_500">#505050</color>
+
+    <!-- Text Colors -->
+    <!-- fixme: add colors for text based on background color -->
+
+    <color name="black">#222222</color>
+    <color name="white">#F7F7F7</color>
 </resources>
