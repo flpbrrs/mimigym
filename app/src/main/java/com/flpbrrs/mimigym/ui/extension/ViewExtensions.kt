@@ -1,4 +1,4 @@
-package com.flpbrrs.mimigym.ui.extensions
+package com.flpbrrs.mimigym.ui.extension
 
 import android.content.Context
 import android.view.View

@@ -9,7 +9,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import com.flpbrrs.mimigym.R
 import com.flpbrrs.mimigym.databinding.FragmentNewTrainingBinding
-import com.flpbrrs.mimigym.ui.extensions.hideKeyboard
+import com.flpbrrs.mimigym.ui.extension.hideKeyboard
 
 class NewTrainingFragment : Fragment() {
     private var _binding: FragmentNewTrainingBinding? = null
