@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -31,8 +33,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
+    kotlin {
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_11
+        }
     }
     buildFeatures {
         viewBinding = true
@@ -47,11 +51,8 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
 
-    implementation(libs.navigation.fragment)
-    implementation(libs.navigation.ui)
-
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
+    implementation(libs.bundles.navigation)
+    implementation(libs.bundles.room)
     ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)
