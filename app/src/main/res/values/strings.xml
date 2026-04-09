@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MimiGym</string>
+    <string name="default_username">Usuário</string>
+    <string name="welcome_message">Olá, seja bem-vindo,</string>
 </resources>
