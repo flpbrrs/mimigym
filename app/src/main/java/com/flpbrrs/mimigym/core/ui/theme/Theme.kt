@@ -1,8 +1,9 @@
-package com.flpbrrs.mimigym.ui.theme
+package com.flpbrrs.mimigym.core.ui.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 
 private val LightColorScheme = lightColorScheme(
     primary = Primary,
@@ -33,9 +34,29 @@ private val LightColorScheme = lightColorScheme(
 fun MimiGymTheme(
     content: @Composable () -> Unit
 ) {
-    MaterialTheme(
-        colorScheme = LightColorScheme,
-        typography = Typography,
-        content = content
-    )
+    CompositionLocalProvider(
+        localSpacing provides Spacing(),
+        localRadius provides Radius(),
+        localSizes provides Sizes()
+    ) {
+        MaterialTheme(
+            colorScheme = LightColorScheme,
+            typography = Typography,
+            content = content
+        )
+    }
+}
+
+object MimiGymTheme {
+    val spacing: Spacing
+        @Composable
+        get() = localSpacing.current
+
+    val radius: Radius
+        @Composable
+        get() = localRadius.current
+
+    val sizes: Sizes
+        @Composable
+        get() = localSizes.current
 }
