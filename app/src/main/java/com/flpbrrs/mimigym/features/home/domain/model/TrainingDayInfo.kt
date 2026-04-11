@@ -1,8 +1,8 @@
 package com.flpbrrs.mimigym.features.home.domain.model
 
 sealed interface TrainingDayInfo {
-    data object Completed : TrainingDayInfo
-    data object Today     : TrainingDayInfo
-    data object Rest      : TrainingDayInfo
-    data object Upcoming  : TrainingDayInfo
+    data class Completed(val sessionId: Long) : TrainingDayInfo
+    data class Today(val templateId: Long) : TrainingDayInfo
+    data object Rest : TrainingDayInfo
+    data class Upcoming(val templateId: Long) : TrainingDayInfo
 }

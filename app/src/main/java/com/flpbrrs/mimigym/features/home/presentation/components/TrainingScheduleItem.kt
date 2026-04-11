@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.flpbrrs.mimigym.R
 import com.flpbrrs.mimigym.core.ui.theme.MimiGymTheme
 import com.flpbrrs.mimigym.features.home.domain.model.TrainingDayInfo
+import com.flpbrrs.mimigym.features.home.domain.model.WeekDaySchedule
 
 private data class ComponentStyle(
     val textColor: Color, val border: BorderStroke, val contentColor: Color
@@ -33,18 +34,16 @@ private data class ComponentStyle(
 @Composable
 fun TrainingScheduleItem(
     modifier: Modifier = Modifier,
-    weekDay: String = "Day",
-    templateName: String = "Train",
-    status: TrainingDayInfo = TrainingDayInfo.Upcoming,
-    onClick: () -> Unit = {}
+    day: WeekDaySchedule,
+    onClick: (TrainingDayInfo) -> Unit = {}
 ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(MimiGymTheme.spacing.sm),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val style = when (status) {
-            TrainingDayInfo.Completed -> ComponentStyle(
+        val style = when (day.trainingInfo) {
+            is TrainingDayInfo.Completed -> ComponentStyle(
                 textColor = MaterialTheme.colorScheme.secondaryContainer,
                 contentColor = MaterialTheme.colorScheme.tertiary,
                 border = BorderStroke(
@@ -60,7 +59,7 @@ fun TrainingScheduleItem(
                 ),
             )
 
-            TrainingDayInfo.Today -> ComponentStyle(
+            is TrainingDayInfo.Today -> ComponentStyle(
                 textColor = MaterialTheme.colorScheme.surface,
                 contentColor = MaterialTheme.colorScheme.tertiaryContainer,
                 border = BorderStroke(
@@ -69,7 +68,7 @@ fun TrainingScheduleItem(
                 ),
             )
 
-            TrainingDayInfo.Upcoming -> ComponentStyle(
+            is TrainingDayInfo.Upcoming -> ComponentStyle(
                 textColor = MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.8f),
                 contentColor = MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.4f),
                 border = BorderStroke(
@@ -80,21 +79,21 @@ fun TrainingScheduleItem(
         }
 
         Text(
-            text = weekDay.uppercase(),
+            text = day.label.uppercase(),
             style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
             color = style.textColor
         )
-
+        
         OutlinedIconButton(
             modifier = Modifier,
             border = style.border,
             colors = IconButtonDefaults.iconButtonColors(
                 containerColor = style.contentColor,
             ),
-            onClick = onClick,
+            onClick = { onClick(day.trainingInfo) },
         ) {
-            when (status) {
-                TrainingDayInfo.Completed -> {
+            when (day.trainingInfo) {
+                is TrainingDayInfo.Completed -> {
                     Icon(
                         painter = painterResource(R.drawable.ic_check_small),
                         contentDescription = stringResource(R.string.training_done),
@@ -110,7 +109,7 @@ fun TrainingScheduleItem(
                     )
                 }
 
-                TrainingDayInfo.Today -> {
+                is TrainingDayInfo.Today -> {
                     Box(
                         Modifier
                             .size(8.dp)
@@ -119,7 +118,7 @@ fun TrainingScheduleItem(
                     )
                 }
 
-                TrainingDayInfo.Upcoming -> {
+                is TrainingDayInfo.Upcoming -> {
                     Icon(
                         painter = painterResource(R.drawable.ic_circle),
                         contentDescription = stringResource(R.string.training_upcoming),
@@ -130,7 +129,7 @@ fun TrainingScheduleItem(
 
         }
         Text(
-            text = templateName,
+            text = day.template,
             style = MaterialTheme.typography.labelSmall,
             color = style.textColor
         )
@@ -142,7 +141,11 @@ fun TrainingScheduleItem(
 private fun TrainingScheduleItemPreview() {
     MimiGymTheme {
         TrainingScheduleItem(
-            weekDay = "SEG", templateName = "Upper A", status = TrainingDayInfo.Upcoming
+            day = WeekDaySchedule(
+                label = "DOM",
+                template = "Low. A",
+                trainingInfo = TrainingDayInfo.Completed(sessionId = 1)
+            )
         )
     }
 }
