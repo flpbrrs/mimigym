@@ -2,4 +2,7 @@
     <string name="app_name">MimiGym</string>
     <string name="default_username">Usuário</string>
     <string name="welcome_message">Olá, seja bem-vindo,</string>
+    <string name="training_done">Treino realizado</string>
+    <string name="training_rest">Dia de descanso</string>
+    <string name="training_upcoming">Treino futuro</string>
 </resources>
