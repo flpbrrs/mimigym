@@ -5,4 +5,5 @@
     <string name="training_done">Treino realizado</string>
     <string name="training_rest">Dia de descanso</string>
     <string name="training_upcoming">Treino futuro</string>
+    <string name="training_today">Treino de hoje</string>
 </resources>

@@ -1,12 +1,8 @@
 package com.flpbrrs.mimigym.features.home.presentation.components
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -15,7 +11,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -83,7 +78,7 @@ fun TrainingScheduleItem(
             style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
             color = style.textColor
         )
-        
+
         OutlinedIconButton(
             modifier = Modifier,
             border = style.border,
@@ -110,17 +105,16 @@ fun TrainingScheduleItem(
                 }
 
                 is TrainingDayInfo.Today -> {
-                    Box(
-                        Modifier
-                            .size(8.dp)
-                            .clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.primary)
+                    Icon(
+                        painter = painterResource(R.drawable.ic_exercise_filled),
+                        contentDescription = stringResource(R.string.training_today),
+                        tint = MaterialTheme.colorScheme.inverseSurface
                     )
                 }
 
                 is TrainingDayInfo.Upcoming -> {
                     Icon(
-                        painter = painterResource(R.drawable.ic_circle),
+                        painter = painterResource(R.drawable.ic_exercise),
                         contentDescription = stringResource(R.string.training_upcoming),
                         tint = MaterialTheme.colorScheme.surface
                     )
