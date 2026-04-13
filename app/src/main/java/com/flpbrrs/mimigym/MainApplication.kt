@@ -1,6 +1,7 @@
 package com.flpbrrs.mimigym
 
 import android.app.Application
+import com.flpbrrs.mimigym.features.home.di.HomeModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -10,6 +11,11 @@ class MainApplication : Application() {
 
         startKoin {
             androidContext(this@MainApplication)
+            modules(
+                HomeModule.data,
+                HomeModule.domain,
+                HomeModule.ui,
+            )
         }
     }
 }
