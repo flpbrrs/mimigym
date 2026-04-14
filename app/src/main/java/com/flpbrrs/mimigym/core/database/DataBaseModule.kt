@@ -15,5 +15,7 @@ object DataBaseModule {
         }
 
         single { get<MimiGymDatabase>().exerciseDao() }
+        single { get<MimiGymDatabase>().templateDao() }
+        single { get<MimiGymDatabase>().sessionDao() }
     }
 }

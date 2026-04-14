@@ -1,13 +1,13 @@
-package com.flpbrrs.mimigym.core.database.exercise
+package com.flpbrrs.mimigym.core.database.template
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "exercises")
-data class ExerciseEntity(
+@Entity(tableName = "template_workout")
+data class TemplateWorkoutEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0L,
     val name: String,
-    @ColumnInfo(name = "muscle_group") val muscleGroup: String,
+    val description: String?,
     @ColumnInfo(name = "created_at") val createdAt: Long,
 )
