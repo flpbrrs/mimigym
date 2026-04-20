@@ -6,4 +6,5 @@
     <string name="training_rest">Dia de descanso</string>
     <string name="training_upcoming">Treino futuro</string>
     <string name="training_today">Treino de hoje</string>
+    <string name="shortcuts_menu_label">Atalhos rápidos</string>
 </resources>
