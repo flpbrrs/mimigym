@@ -18,11 +18,17 @@ interface ExerciseDao {
     )
     fun getFilteredList(name: String?, muscleGroup: String?): Flow<List<ExerciseEntity>>
 
+    @Query("select * from exercises where name = :name and muscle_group = :muscleGroup")
+    suspend fun getByNameAndMuscleGroup(name: String?, muscleGroup: String?): ExerciseEntity?
+
     @Query("select distinct muscle_group from exercises")
     fun getUsedMuscleGroups(): Flow<List<String>>
 
     @Query("select * from exercises where id = :id")
     suspend fun getById(id: Long): ExerciseEntity?
+
+    @Query("select count(*) from template_exercise where exercise_id = :id")
+    suspend fun getTemplateCountByExercise(id: Long): Int
 
     @Insert
     suspend fun insert(exercise: ExerciseEntity)

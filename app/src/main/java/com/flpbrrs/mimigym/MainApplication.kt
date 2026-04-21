@@ -18,7 +18,8 @@ class MainApplication : Application() {
                 HomeModule.data,
                 HomeModule.domain,
                 HomeModule.ui,
-                ExercisesModule.data
+                ExercisesModule.data,
+                ExercisesModule.domain
             )
         }
     }

@@ -13,18 +13,22 @@ class ExerciseRepositoryImpl(
     private val exerciseDao: ExerciseDao
 ) : ExercisesRepository {
     override fun getExerciseList(
-        name: String?,
-        muscleGroups: MuscleGroup?
-    ): Flow<List<Exercise>> =
-        exerciseDao.getFilteredList(
-            name = name,
-            muscleGroup = muscleGroups?.name
-        ).map { exercises -> exercises.map { it.toDomain() } }
+        name: String?, muscleGroups: MuscleGroup?
+    ): Flow<List<Exercise>> = exerciseDao.getFilteredList(
+        name = name, muscleGroup = muscleGroups?.name
+    ).map { exercises -> exercises.map { it.toDomain() } }
 
-    override fun getUsedMuscleGroups(): Flow<List<MuscleGroup>> =
-        exerciseDao.getUsedMuscleGroups()
-            .map { muscleGroup -> muscleGroup.map { MuscleGroup.valueOf(it) } }
+    override fun getUsedMuscleGroups(): Flow<List<MuscleGroup>> = exerciseDao.getUsedMuscleGroups()
+        .map { muscleGroup -> muscleGroup.map { MuscleGroup.valueOf(it) } }
 
+    override suspend fun getExerciseByNameAndMuscleGroup(
+        name: String,
+        muscleGroup: MuscleGroup,
+    ): Exercise? =
+        exerciseDao.getByNameAndMuscleGroup(name = name, muscleGroup = muscleGroup.name)?.toDomain()
+
+    override suspend fun getTemplateCountByExercise(id: Long): Int =
+        exerciseDao.getTemplateCountByExercise(id)
 
     override suspend fun registerExercise(exercise: Exercise) =
         exerciseDao.insert(exercise.toEntity(createdAt = System.currentTimeMillis()))
