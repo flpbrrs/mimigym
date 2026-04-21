@@ -5,7 +5,7 @@ import com.flpbrrs.mimigym.features.exercises.domain.model.MuscleGroup
 import kotlinx.coroutines.flow.Flow
 
 interface ExercisesRepository {
-    fun getExerciseList(name: String?, muscleGroups: List<MuscleGroup>?): Flow<List<Exercise>>
+    fun getExerciseList(name: String?, muscleGroups: MuscleGroup?): Flow<List<Exercise>>
     fun getUsedMuscleGroups(): Flow<List<MuscleGroup>>
     suspend fun registerExercise(exercise: Exercise)
     suspend fun updateExercise(exercise: Exercise)
