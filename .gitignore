@@ -75,3 +75,6 @@ lint-results-*.xml
 # OS files
 .DS_Store
 Thumbs.db
+
+# Diretrizes locais de desenvolvimento (não versionado)
+CLAUDE.md
