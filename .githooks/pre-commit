@@ -1,0 +1,18 @@
+#!/bin/sh
+# Gate de commit: so deixa commitar se o codigo formata certo, compila e os
+# testes unitarios passam. Roda Gradle (lint/compile/test) fora do contexto
+# do Claude -- nada disso deveria consumir tokens de IA.
+
+echo "pre-commit: rodando ktlintCheck, compileDebugKotlin e testDebugUnitTest..."
+
+./gradlew ktlintCheck compileDebugKotlin testDebugUnitTest --console=plain
+
+status=$?
+
+if [ $status -ne 0 ]; then
+  echo ""
+  echo "pre-commit: bloqueado. Corrija os erros acima antes de commitar."
+  echo "Dica: 'gradlew ktlintFormat' corrige a maioria dos problemas de estilo."
+fi
+
+exit $status
