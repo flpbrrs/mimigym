@@ -1,4 +1,4 @@
-package com.flpbrrs.mimigym.ui.theme
+package com.flpbrrs.mimigym.core.ui.theme
 
 import android.app.Activity
 import android.os.Build
