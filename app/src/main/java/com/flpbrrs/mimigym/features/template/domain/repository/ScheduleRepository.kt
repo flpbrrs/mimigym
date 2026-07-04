@@ -1,3 +1,7 @@
 package com.flpbrrs.mimigym.features.template.domain.repository
 
-interface ScheduleRepository
+import com.flpbrrs.mimigym.features.template.domain.model.WeeklySchedule
+
+interface ScheduleRepository {
+    fun getWeeklySchedule(): List<WeeklySchedule>
+}
