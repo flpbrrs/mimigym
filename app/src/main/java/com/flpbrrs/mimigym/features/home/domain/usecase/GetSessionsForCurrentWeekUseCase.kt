@@ -26,9 +26,9 @@ class GetSessionsForCurrentWeekUseCase(
             )
         val weekSchedule = scheduleRepository.getWeeklySchedule()
 
-        return DayOfWeek.entries.mapIndexed { index, day ->
+        return DayOfWeek.entries.map { day ->
             val trainingOfDay = weekSchedule.find { it.dayOfWeek == day }
-            val actualDate = firstDayOfWeek.plusDays(index.toLong())
+            val actualDate = firstDayOfWeek.plusDays(day.isoValue.toLong())
 
             val trainingAlreadyDone =
                 sessionsCompletedOfWeek.any {
