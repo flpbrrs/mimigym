@@ -17,15 +17,13 @@ class GetSessionsForCurrentWeekUseCase(
     private val scheduleRepository: ScheduleRepository,
 ) {
     operator fun invoke(referenceDate: LocalDate): List<GetSessionsForCurrentWeekResponse> {
-        val firstDayOfWeek =
-            referenceDate.minusDays(
-                ((referenceDate.dayOfWeek.value % 7).toLong()),
-            )
-        val lastDayOfWeek = firstDayOfWeek.plusDays(6)
+        val (firstDayOfWeek, lastDayOfWeek) = getWeekLimitsFor(referenceDate)
 
         val sessionsCompletedOfWeek =
-            sessionRepository
-                .getSessionsBetween(firstDayOfWeek, lastDayOfWeek)
+            sessionRepository.getSessionsBetween(
+                firstDayOfWeek,
+                lastDayOfWeek,
+            )
         val weekSchedule = scheduleRepository.getWeeklySchedule()
 
         return DayOfWeek.entries.mapIndexed { index, day ->
@@ -51,5 +49,12 @@ class GetSessionsForCurrentWeekUseCase(
                     },
             )
         }
+    }
+
+    private fun getWeekLimitsFor(referenceDate: LocalDate): Pair<LocalDate, LocalDate> {
+        val firstDayOfWeek = referenceDate.minusDays(((referenceDate.dayOfWeek.value % 7).toLong()))
+        val lastDayOfWeek = firstDayOfWeek.plusDays(6)
+
+        return Pair(firstDayOfWeek, lastDayOfWeek)
     }
 }
