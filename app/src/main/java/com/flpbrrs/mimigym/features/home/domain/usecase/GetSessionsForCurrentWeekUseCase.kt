@@ -12,23 +12,28 @@ data class GetSessionsForCurrentWeekResponse(
     val status: DayStatus,
 )
 
+private data class WeekRange(
+    val startDate: LocalDate,
+    val endDate: LocalDate,
+)
+
 class GetSessionsForCurrentWeekUseCase(
     private val sessionRepository: SessionRepository,
     private val scheduleRepository: ScheduleRepository,
 ) {
     operator fun invoke(referenceDate: LocalDate): List<GetSessionsForCurrentWeekResponse> {
-        val (firstDayOfWeek, lastDayOfWeek) = getWeekLimitsFor(referenceDate)
+        val weekRange = getWeekLimitsFor(referenceDate)
 
         val sessionsCompletedOfWeek =
             sessionRepository.getSessionsBetween(
-                firstDayOfWeek,
-                lastDayOfWeek,
+                weekRange.startDate,
+                weekRange.endDate,
             )
         val weekSchedule = scheduleRepository.getWeeklySchedule()
 
         return DayOfWeek.entries.map { day ->
             val trainingOfDay = weekSchedule.find { it.dayOfWeek == day }
-            val actualDate = firstDayOfWeek.plusDays(day.isoValue.toLong())
+            val actualDate = weekRange.startDate.plusDays(day.isoValue.toLong())
 
             val trainingAlreadyDone =
                 sessionsCompletedOfWeek.any {
@@ -51,10 +56,10 @@ class GetSessionsForCurrentWeekUseCase(
         }
     }
 
-    private fun getWeekLimitsFor(referenceDate: LocalDate): Pair<LocalDate, LocalDate> {
+    private fun getWeekLimitsFor(referenceDate: LocalDate): WeekRange {
         val firstDayOfWeek = referenceDate.minusDays(((referenceDate.dayOfWeek.value % 7).toLong()))
         val lastDayOfWeek = firstDayOfWeek.plusDays(6)
 
-        return Pair(firstDayOfWeek, lastDayOfWeek)
+        return WeekRange(firstDayOfWeek, lastDayOfWeek)
     }
 }
