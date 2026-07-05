@@ -17,6 +17,39 @@ class GetSessionsForCurrentWeekUseCase(
     private val scheduleRepository: ScheduleRepository,
 ) {
     operator fun invoke(referenceDate: LocalDate): List<GetSessionsForCurrentWeekResponse> {
-        TODO()
+        val firstDayOfWeek =
+            referenceDate.minusDays(
+                ((referenceDate.dayOfWeek.value % 7).toLong()),
+            )
+        val lastDayOfWeek = firstDayOfWeek.plusDays(6)
+
+        val sessionsCompletedOfWeek =
+            sessionRepository
+                .getSessionsBetween(firstDayOfWeek, lastDayOfWeek)
+        val weekSchedule = scheduleRepository.getWeeklySchedule()
+
+        return DayOfWeek.entries.mapIndexed { index, day ->
+            val trainingOfDay = weekSchedule.find { it.dayOfWeek == day }
+            val actualDate = firstDayOfWeek.plusDays(index.toLong())
+
+            val trainingAlreadyDone =
+                sessionsCompletedOfWeek.any {
+                    it.templateId == trainingOfDay?.templateId &&
+                        it.startedAt.toLocalDate() == actualDate &&
+                        it.finishedAt != null
+                }
+
+            GetSessionsForCurrentWeekResponse(
+                dayOfWeek = day,
+                templateId = trainingOfDay?.templateId,
+                status =
+                    when {
+                        trainingOfDay == null -> DayStatus.REST
+                        trainingAlreadyDone -> DayStatus.DONE
+                        actualDate == referenceDate -> DayStatus.CURRENT
+                        else -> DayStatus.SCHEDULED
+                    },
+            )
+        }
     }
 }
