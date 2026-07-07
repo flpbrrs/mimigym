@@ -9,28 +9,13 @@ import com.flpbrrs.mimigym.features.template.domain.repository.ScheduleRepositor
 import org.junit.Assert
 import org.junit.Test
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 class GetSessionsForCurrentWeekUseCaseTest {
     @Test
-    fun `Should return REST for a day without template`() {
-        val schedule =
-            listOf(
-                WeeklySchedule(id = 1, templateId = 1, dayOfWeek = DayOfWeek.SUN),
-                WeeklySchedule(id = 2, templateId = 2, dayOfWeek = DayOfWeek.TUE),
-                WeeklySchedule(id = 3, templateId = 3, dayOfWeek = DayOfWeek.THU),
-                WeeklySchedule(id = 4, templateId = 4, dayOfWeek = DayOfWeek.SAT),
-            )
-        val sessions =
-            listOf(
-                WorkoutSession(
-                    id = 1,
-                    templateId = 1,
-                    startedAt = LocalDateTime.of(2026, 7, 5, 9, 0),
-                    finishedAt = LocalDateTime.of(2026, 7, 5, 10, 0),
-                    note = null,
-                ),
-            )
+    fun `Should return REST for days without template`() {
+        val schedule = emptyList<WeeklySchedule>()
+        val sessions = emptyList<WorkoutSession>()
+
         val useCase =
             GetSessionsForCurrentWeekUseCase(
                 sessionRepository = FakeSessionRepository(sessions = sessions),
@@ -44,8 +29,8 @@ class GetSessionsForCurrentWeekUseCaseTest {
             listOf(
                 GetSessionsForCurrentWeekResponse(
                     dayOfWeek = DayOfWeek.SUN,
-                    templateId = 1,
-                    status = DayStatus.DONE,
+                    templateId = null,
+                    status = DayStatus.REST,
                 ),
                 GetSessionsForCurrentWeekResponse(
                     dayOfWeek = DayOfWeek.MON,
@@ -54,8 +39,8 @@ class GetSessionsForCurrentWeekUseCaseTest {
                 ),
                 GetSessionsForCurrentWeekResponse(
                     dayOfWeek = DayOfWeek.TUE,
-                    templateId = 2,
-                    status = DayStatus.SCHEDULED,
+                    templateId = null,
+                    status = DayStatus.REST,
                 ),
                 GetSessionsForCurrentWeekResponse(
                     dayOfWeek = DayOfWeek.WED,
@@ -64,8 +49,8 @@ class GetSessionsForCurrentWeekUseCaseTest {
                 ),
                 GetSessionsForCurrentWeekResponse(
                     dayOfWeek = DayOfWeek.THU,
-                    templateId = 3,
-                    status = DayStatus.SCHEDULED,
+                    templateId = null,
+                    status = DayStatus.REST,
                 ),
                 GetSessionsForCurrentWeekResponse(
                     dayOfWeek = DayOfWeek.FRI,
@@ -74,8 +59,8 @@ class GetSessionsForCurrentWeekUseCaseTest {
                 ),
                 GetSessionsForCurrentWeekResponse(
                     dayOfWeek = DayOfWeek.SAT,
-                    templateId = 4,
-                    status = DayStatus.SCHEDULED,
+                    templateId = null,
+                    status = DayStatus.REST,
                 ),
             )
         Assert.assertEquals(expected, result)
