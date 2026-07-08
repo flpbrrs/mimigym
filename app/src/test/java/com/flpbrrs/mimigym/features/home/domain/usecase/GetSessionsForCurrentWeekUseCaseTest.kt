@@ -47,6 +47,38 @@ class GetSessionsForCurrentWeekUseCaseTest {
         Assert.assertEquals(expected, result)
     }
 
+    @Test
+    fun `Should return DONE for a day with registered section`() {
+        val schedule =
+            listOf(
+                WeeklySchedule(
+                    id = 1L,
+                    templateId = 1L,
+                    dayOfWeek = DayOfWeek.SUN,
+                ),
+            )
+        val sessions =
+            listOf(
+                WorkoutSession(
+                    id = 1L,
+                    templateId = 1L,
+                    startedAt = referenceDate.minusDays(1).atTime(9, 0),
+                    finishedAt = referenceDate.minusDays(1).atTime(9, 30),
+                    note = null,
+                ),
+            )
+
+        val result = executeUseCaseWith(schedule, sessions)
+        val expected =
+            expectedResult().with(
+                day = DayOfWeek.SUN,
+                templateId = 1L,
+                status = DayStatus.DONE,
+            )
+
+        Assert.assertEquals(expected, result)
+    }
+
     private fun executeUseCaseWith(
         schedule: List<WeeklySchedule>,
         sessions: List<WorkoutSession>,
