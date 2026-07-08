@@ -11,60 +11,76 @@ import org.junit.Test
 import java.time.LocalDate
 
 class GetSessionsForCurrentWeekUseCaseTest {
+    private val referenceDate: LocalDate = LocalDate.of(2026, 7, 6) // MONDAY
+
     @Test
     fun `Should return REST for days without template`() {
         val schedule = emptyList<WeeklySchedule>()
         val sessions = emptyList<WorkoutSession>()
 
+        val result = executeUseCaseWith(schedule, sessions)
+        val expected = expectedResult()
+
+        Assert.assertEquals(expected, result)
+    }
+
+    @Test
+    fun `Should return CURRENT for the training of day`() {
+        val schedule =
+            listOf(
+                WeeklySchedule(
+                    id = 1L,
+                    templateId = 1L,
+                    dayOfWeek = DayOfWeek.MON,
+                ),
+            )
+        val sessions = emptyList<WorkoutSession>()
+
+        val result = executeUseCaseWith(schedule, sessions)
+        val expected =
+            expectedResult().with(
+                day = DayOfWeek.MON,
+                templateId = 1,
+                status = DayStatus.CURRENT,
+            )
+
+        Assert.assertEquals(expected, result)
+    }
+
+    private fun executeUseCaseWith(
+        schedule: List<WeeklySchedule>,
+        sessions: List<WorkoutSession>,
+    ): List<GetSessionsForCurrentWeekResponse> {
         val useCase =
             GetSessionsForCurrentWeekUseCase(
                 sessionRepository = FakeSessionRepository(sessions = sessions),
                 scheduleRepository = FakeScheduleRepository(schedule = schedule),
             )
 
-        val referenceDate = LocalDate.of(2026, 7, 6) // MONDAY
-        val result = useCase(referenceDate = referenceDate)
-
-        val expected =
-            listOf(
-                GetSessionsForCurrentWeekResponse(
-                    dayOfWeek = DayOfWeek.SUN,
-                    templateId = null,
-                    status = DayStatus.REST,
-                ),
-                GetSessionsForCurrentWeekResponse(
-                    dayOfWeek = DayOfWeek.MON,
-                    templateId = null,
-                    status = DayStatus.REST,
-                ),
-                GetSessionsForCurrentWeekResponse(
-                    dayOfWeek = DayOfWeek.TUE,
-                    templateId = null,
-                    status = DayStatus.REST,
-                ),
-                GetSessionsForCurrentWeekResponse(
-                    dayOfWeek = DayOfWeek.WED,
-                    templateId = null,
-                    status = DayStatus.REST,
-                ),
-                GetSessionsForCurrentWeekResponse(
-                    dayOfWeek = DayOfWeek.THU,
-                    templateId = null,
-                    status = DayStatus.REST,
-                ),
-                GetSessionsForCurrentWeekResponse(
-                    dayOfWeek = DayOfWeek.FRI,
-                    templateId = null,
-                    status = DayStatus.REST,
-                ),
-                GetSessionsForCurrentWeekResponse(
-                    dayOfWeek = DayOfWeek.SAT,
-                    templateId = null,
-                    status = DayStatus.REST,
-                ),
-            )
-        Assert.assertEquals(expected, result)
+        return useCase(referenceDate = referenceDate)
     }
+
+    private fun expectedResult(): List<GetSessionsForCurrentWeekResponse> =
+        DayOfWeek.entries.map { day ->
+            GetSessionsForCurrentWeekResponse(
+                dayOfWeek = day,
+                templateId = null,
+                status = DayStatus.REST,
+            )
+        }
+
+    private fun List<GetSessionsForCurrentWeekResponse>.with(
+        day: DayOfWeek,
+        templateId: Long,
+        status: DayStatus,
+    ): List<GetSessionsForCurrentWeekResponse> =
+        this.map { sessionDay ->
+            if (sessionDay.dayOfWeek == day) {
+                sessionDay.copy(templateId = templateId, status = status)
+            } else {
+                sessionDay
+            }
+        }
 }
 
 private class FakeScheduleRepository(
