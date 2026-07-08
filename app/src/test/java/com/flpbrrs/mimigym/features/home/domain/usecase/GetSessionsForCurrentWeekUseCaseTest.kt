@@ -79,6 +79,29 @@ class GetSessionsForCurrentWeekUseCaseTest {
         Assert.assertEquals(expected, result)
     }
 
+    @Test
+    fun `Should return SCHEDULED for a day in the future`() {
+        val schedule =
+            listOf(
+                WeeklySchedule(
+                    id = 1L,
+                    templateId = 1L,
+                    dayOfWeek = DayOfWeek.TUE,
+                ),
+            )
+        val sessions = emptyList<WorkoutSession>()
+
+        val result = executeUseCaseWith(schedule, sessions)
+        val expected =
+            expectedResult().with(
+                day = DayOfWeek.TUE,
+                templateId = 1L,
+                status = DayStatus.SCHEDULED,
+            )
+
+        Assert.assertEquals(expected, result)
+    }
+
     private fun executeUseCaseWith(
         schedule: List<WeeklySchedule>,
         sessions: List<WorkoutSession>,
